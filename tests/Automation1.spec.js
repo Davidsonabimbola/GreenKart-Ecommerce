@@ -1,5 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const multiOrders = require('../pages/makeMultipleOrders')
+const dataset  = JSON.parse(JSON.stringify(require('../utils/Testdata.json')))
+
 
 
 
@@ -17,15 +19,10 @@ test('@add items to cart', async ({ page }) => {
 });
 
 
-test.only('@for loop add items to cart', async ({ page }) => {
+test.only('for loop add items to cart', async ({ page }) => {
      const MultiOrders = multiOrders(page)
-    let Selected_Country = 'Belgium'
     let Price_total = []
-    const orderItem1 = 'Cucumber';
-    const orderItem2 = 'Cauliflower';
-    const orderItem3 = 'Potato'
-    const orderItem4 = 'Tomato'
-    const items = [orderItem1, orderItem2, orderItem3, orderItem4];
+    const items = [dataset.orderItem1, dataset.orderItem2, dataset.orderItem3, dataset.orderItem4];
     const products =  page.locator('[class="product"]');
 
     await MultiOrders.goToLoginPage()
@@ -34,7 +31,7 @@ test.only('@for loop add items to cart', async ({ page }) => {
      await MultiOrders.totalAmount(Price_total)
      await MultiOrders.checkOut()
      await MultiOrders.placeOrder()
-     await MultiOrders.completeOrder(Selected_Country)
+     await MultiOrders.completeOrder(dataset.Selected_Country)
      
     // await page.goto("https://rahulshettyacademy.com/seleniumPractise/#/");
     // const products =  page.locator('[class="product"]');
